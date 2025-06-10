@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>44kdot Records Music Platform</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background: #111; color: #f5f5f5; margin: 0; padding: 20px; }
+    h1, h2 { color: #00ff99; }
+    .track-card { background: #222; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+    textarea { width: 100%; border-radius: 5px; }
+    input, button { padding: 10px; margin: 5px 0; border-radius: 5px; }
+    .upload-section, .login-section { background: #333; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
+    video, audio { width: 100%; max-width: 400px; display: block; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>🎵 44kdot Records Music Platform</h1>
+  <div class="login-section">
+    <h2>Admin Login</h2>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required><br>
+      <input type="password" id="password" placeholder="Password" required><br>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <div class="upload-section">
+    <h2>Upload New Track</h2>
+    <form id="uploadForm">
+      <input type="text" id="title" placeholder="Track Title" required><br>
+      <input type="text" id="artist" placeholder="Artist Name" required><br>
+      <input type="file" id="audioFile" accept="audio/*" required><br>
+      <input type="file" id="coverImage" accept="image/*" required><br>
+      <input type="file" id="videoFile" accept="video/*"><br>
+      <button type="submit">Upload</button>
+    </form>
+  </div>
+
+  <h2>🔥 Latest Music</h2>
+  <div id="track-list"></div>
+
+  <script src="app.js"></script>
+  <script src="upload.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

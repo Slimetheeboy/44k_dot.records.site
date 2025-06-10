@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel - 44kdot Records</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD9ytYejDuuJg2oGJdKHyjhmK3sC98Djkg",
+      authDomain: "kdot-distribution.firebaseapp.com",
+      projectId: "kdot-distribution",
+      storageBucket: "kdot-distribution.appspot.com",
+      messagingSenderId: "664065044961",
+      appId: "1:664065044961:web:0a718f62142774f48922a0"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</head>
+<body>
+  <h2>Admin Login</h2>
+  <input type="email" id="adminEmail" placeholder="Email" />
+  <input type="password" id="adminPassword" placeholder="Password" />
+  <button onclick="login()">Login</button>
+
+  <div id="uploadSection" style="display:none;">
+    <h3>Upload New Song</h3>
+    <input type="text" id="songTitle" placeholder="Song Title" />
+    <input type="text" id="songArtist" placeholder="Artist Name" />
+    <input type="file" id="songFile" />
+    <button onclick="uploadSong()">Upload</button>
+  </div>
+
+  <script>
+    function login() {
+      const email = document.getElementById('adminEmail').value;
+      const password = document.getElementById('adminPassword').value;
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => {
+          document.getElementById('uploadSection').style.display = 'block';
+        }).catch(error => {
+          alert("Login failed: " + error.message);
+        });
+    }
+
+    function uploadSong() {
+      const title = document.getElementById('songTitle').value;
+      const artist = document.getElementById('songArtist').value;
+      const file = document.getElementById('songFile').files[0];
+      const storageRef = firebase.storage().ref('songs/' + file.name);
+      const db = firebase.firestore();
+
+      storageRef.put(file).then(snapshot => {
+        snapshot.ref.getDownloadURL().then(url => {
+          db.collection('songs').add({
+            title,
+            artist,
+            url,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(() => {
+            alert('Song uploaded!');
+          });
+        });
+      });
+    }
+  </script>
+</body>
+</html>
